@@ -5,14 +5,14 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AuthModule } from "./module/auth/auth.module";
 import { ProfileModule } from "./module/profile/profile.module";
-
-import { UserRepository } from "./repository/user.respository";
+import { IntegrationModule } from "./module/integration/integration.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     ProfileModule,
+    IntegrationModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.DB_HOST,

@@ -10,12 +10,11 @@ import {
     Delete,
     Query
 } from '@nestjs/common';
+
 import { RoleGuard } from "../../guards/role.guard";
 import { Roles } from "../auth/roles";
-
+import { AccessTokenGuard } from "../../guards/accessToken.guard";
 import { ProfileService } from "./profile.service";
-
-import { AccessTokenGuard } from "../../guards/accessToken.guard"
 import { UserType } from "../../util/constants";
 
 @Controller("profiles")
@@ -26,7 +25,7 @@ export class ProfileController {
 
     // USER ENDPOINTS
     @Roles(UserType.Admin, UserType.User, UserType.Member)
-    @UseGuards(AccessTokenGuard)
+    @UseGuards(AccessTokenGuard, RoleGuard)
     @Get("me")
     async getById(@Request() req) {
         return await this.profileService.getMeUser(req?.user?.sub);
